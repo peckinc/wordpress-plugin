@@ -1,0 +1,12 @@
+.soundcheck-layout {
+	margin: 0;
+	padding: 0;
+
+	&__primary {
+		margin: 80px 0 0 $margin-bottom;
+	}
+
+	.margin-bottom {
+		margin-bottom: $margin-bottom;
+	}
+}

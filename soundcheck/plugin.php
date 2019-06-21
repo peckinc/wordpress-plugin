@@ -1,0 +1,68 @@
+<?php
+/**
+ * Plugin Name: Soundcheck
+ * Plugin URI: https://soundcheck.ai/wordpress
+ * Description: This is a plugin for managing content for smart speakers in WordPress posts.
+ * Version: 1.0.0
+ * Author: Soundcheck
+ *
+ * @package soundcheck
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Returns true if all dependencies for the wc-admin plugin are loaded.
+ *
+ * @return bool
+ */
+function soundcheck_dependencies_satisfied() {
+
+	$wordpress_version            = get_bloginfo( 'version' );
+	$wordpress_includes_gutenberg = version_compare( $wordpress_version, '4.9.9', '>' );
+	$gutenberg_plugin_active      = defined( 'GUTENBERG_DEVELOPMENT_MODE' ) || defined( 'GUTENBERG_VERSION' );
+
+	return $wordpress_includes_gutenberg || $gutenberg_plugin_active;
+}
+
+/**
+ * Block Initializer.
+ */
+require_once plugin_dir_path( __FILE__ ) . 'src/init-blocks.php';
+
+
+if ( ! defined( 'SOUNDCHECK_ADMIN_APP' ) ) {
+	define( 'SOUNDCHECK_ADMIN_APP', 'soundcheck-admin-app' );
+}
+
+if ( ! defined( 'SOUNDCHECK_ADMIN_ABSPATH' ) ) {
+	define( 'SOUNDCHECK_ADMIN_ABSPATH', dirname( __FILE__ ) );
+}
+
+if ( ! defined( 'SOUNDCHECK_ADMIN_PLUGIN_FILE' ) ) {
+	define( 'SOUNDCHECK_ADMIN_PLUGIN_FILE', __FILE__ );
+}
+
+function soundcheck_admin_plugins_loaded() {
+	if ( ! soundcheck_dependencies_satisfied() ) {
+		add_action( 'admin_notices', 'soundcheck_admin_plugins_notice' );
+		return;
+	}
+
+	require_once plugin_dir_path( __FILE__ ) . 'src/init-admin.php';
+}
+add_action( 'plugins_loaded', 'soundcheck_admin_plugins_loaded' );
+
+function output_structured_data() {
+	$post_id = get_the_ID();
+	$meta = get_post_meta($post_id);
+	if ( $meta["_soundcheck_include_speakable_sd"] && $meta["_soundcheck_include_speakable_sd"][0] ) {
+		$speakable = array("@type" => "SpeakableSpecification", "cssSelector" => array(".is-style-speakable", ".wp-block-soundcheck-speakable"));
+		$sd = array("@context" => "http://schema.org/", "@type" => "WebPage", "speakable" => $speakable);
+		echo '<script type="application/ld+json">' . wp_json_encode($sd) . '</script>';
+	}
+}
+add_action( 'wp_footer', 'output_structured_data' , 10 );

@@ -1,0 +1,15 @@
+.soundcheck-voice-apps {
+    &__summary {
+        
+        img {
+            float:left;
+            height:108px;
+            width:108px;
+            padding: 0 $gap 0 $gap;
+        }
+
+        &__content {
+            margin-left: (108 + $gap*2);
+        }
+    }
+}

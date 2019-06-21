@@ -1,0 +1,12 @@
+.soundcheck-dashboard-footer {
+
+    display:flex;
+    width:100%;
+    padding:$gap $gap;
+    flex-direction: row-reverse;
+
+    &__item {
+        margin: $gap/2;
+    }
+
+}
