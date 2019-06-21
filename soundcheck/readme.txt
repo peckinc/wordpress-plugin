@@ -29,4 +29,8 @@ A custom Gutenberg block for adding Speakable content to your posts.
 * Warn when content is not properly optimized for voice.
 * Preview the voice-optimized content on any post.
 
-Visit [soundcheck.ai](https//:soundcheck.ai/wordpress) to learn more.
+### More Info
+
+* Soundcheck WordPress Plugin website [soundcheck.ai](https://soundcheck.ai/wordpress).
+* About [Speakable Content](https://soundcheck.ai/speakable-content).
+* Plugin [Github page](https://github.com/peckinc/wordpress-plugin)
