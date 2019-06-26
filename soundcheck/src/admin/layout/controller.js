@@ -15,7 +15,6 @@ const Controller = withState(
 		route: page
 	}
 )(({ route }) => {
-	console.log(route);
 	switch (route) {
 		case 'soundcheck-structured-data':
 			return 

@@ -7,10 +7,12 @@ const DEFAULT_STATE = {
         selectedAppId: null,
         apps: [],
         stats: {},
-        sources: {}
+        sources: {},
+        loaded: false
     },
     soundcheckAuth: {
         user: null,
+        loaded: false,
         token: localStorage.getItem("jwt")
     }
 };
@@ -42,7 +44,8 @@ const voiceApps = (state = DEFAULT_STATE.voiceApps, action) => {
             return {
                 ...state,
                 apps: action.apps,
-                selectedAppId: (action.apps.length > 0 ? action.apps[0].id : null)
+                selectedAppId: (action.apps.length > 0 ? action.apps[0].id : null),
+                loaded: true
             };
         case 'VOICEAPPS_SET_SOURCES':
             return {
@@ -80,7 +83,8 @@ const soundcheckAuth = (state = DEFAULT_STATE.soundcheckAuth, action) => {
         console.log("SETTING USER",action.user)
             return {
                 ...state,
-                user: action.user
+                user: action.user,
+                loaded: true
             };
         case 'AUTH_SET_TOKEN':
             localStorage.setItem("jwt", action.token);

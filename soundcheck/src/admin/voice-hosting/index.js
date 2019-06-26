@@ -13,13 +13,17 @@ import google from '../images/google.png';
 import soundcheck from '../images/soundcheck.png';
 
 const VoiceHosting = withSelect((select, ownProps) => {
-    const { getUser } = select('soundcheck');
+    const { getUser, getUserLoaded } = select('soundcheck');
     const user = getUser();
+    const loaded = getUserLoaded();
     return {
-        user
+        user,
+        loaded
     }
-})(({ user }) => {
-    if (user) {
+})(({ user, loaded }) => {
+    if (!loaded) {
+        return <div></div>;
+    } else if (user) {
         return <VoiceHostingPanel className="margin-bottom"></VoiceHostingPanel>;
     } else {
         return (
@@ -57,19 +61,22 @@ const VoiceHosting = withSelect((select, ownProps) => {
 });
 
 const VoiceHostingPanel = withSelect((select, ownProps) => {
-    const { getVoiceApps, getSelectedVoiceAppId } = select('soundcheck');
+    const { getVoiceApps, getSelectedVoiceAppId, getVoiceAppsLoaded } = select('soundcheck');
     const hostname = window.location.hostname;
     const apps = getVoiceApps();
-    //const selectedApp = getVoiceAppById(apps, getSelectedVoiceAppId());
+    const loaded = getVoiceAppsLoaded();
     const selectedApp = apps.find(va => { return (va.domain == hostname) });
     return {
         selectedApp: selectedApp,
         voiceApps: apps,
-        domain: hostname
+        domain: hostname,
+        loaded
     }
-})(({ className, selectedApp, icon, domain }) => {
+})(({ className, selectedApp, icon, domain, loaded }) => {
 
-    if (selectedApp) {
+    if (!loaded) {
+        return <div></div>;
+    } else if (selectedApp) {
         return <Panel header="Voice Hosting" className={className ? className : ''}>
             <PanelBody
                 title={`${selectedApp.term} Voice Activity`}

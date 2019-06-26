@@ -3,7 +3,6 @@ import { withSelect, withDispatch } from '@wordpress/data';
 
 import './style.scss';
 import CommandPanelBody from './command';
-import Analytics from './analytics';
 import Footer from '../components/footer';
 import SignIn from '../sign-in';
 import ListDomainPanel from '../components/list-domain';
@@ -12,24 +11,20 @@ import alexa from '../images/alexa.png';
 import google from '../images/google.png';
 import soundcheck from '../images/soundcheck.png';
 
-import { soundcheckUrl, soundcheckApiUrl } from '../environment';
-
-const getVoiceAppById = (apps, id) => {
-
-    if (apps) {
-        return apps.find(app => app.id == id);
-    }
-    return undefined;
-}
+import { soundcheckUrl } from '../environment';
 
 const VoiceApps = withSelect((select, ownProps) => {
-    const { getUser } = select('soundcheck');
+    const { getUser, getUserLoaded } = select('soundcheck');
     const user = getUser();
+    const loaded = getUserLoaded();
     return {
-        user
+        user,
+        loaded
     }
-})(({ user }) => {
-    if (user) {
+})(({ user, loaded }) => {
+    if (!loaded) {
+        return <div></div>;
+    } else if (user) {
         return <VoiceAppsPanel className="margin-bottom"></VoiceAppsPanel>;
     } else {
         return (
@@ -60,18 +55,22 @@ const VoiceApps = withSelect((select, ownProps) => {
 });
 
 const VoiceAppsPanel = withSelect((select, ownProps) => {
-    const { getVoiceApps, getSelectedVoiceAppId } = select('soundcheck');
+    const { getVoiceApps, getVoiceAppsLoaded } = select('soundcheck');
     const hostname = window.location.hostname;
     const apps = getVoiceApps();
+    const loaded = getVoiceAppsLoaded();
     const selectedApp = apps.find(va => { return (va.domain == hostname) });
     return {
         selectedApp: selectedApp,
         voiceApps: apps,
-        domain: hostname
+        domain: hostname,
+        loaded
     }
-})(({ className, selectedApp, icon, domain }) => {
+})(({ className, selectedApp, loaded, domain }) => {
 
-    if (selectedApp) {
+    if (!loaded) {
+        return <div></div>;
+    } else if (selectedApp) {
         return <Panel header="Voice Interactions" className={className ? className : ''}>
             <PanelBody>
                 <p>Your Voice Interactions define how users can engange with your voice presence. Each interaction represents a question or command from a user and the response from the voice assistant.</p>

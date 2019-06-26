@@ -32,6 +32,11 @@ registerStore('soundcheck', {
             return voiceApps.apps;
         },
 
+        getVoiceAppsLoaded(state) {
+            const { voiceApps } = state;
+            return voiceApps.loaded;
+        },
+
         getCommandSources(state, appId, commandId) {
             const { voiceApps } = state;
             return voiceApps.sources[commandId];
@@ -53,8 +58,13 @@ registerStore('soundcheck', {
 
         getUser(state) {
             const { soundcheckAuth } = state;
-            console.log("auth state", state);
             return soundcheckAuth.user;
+
+        },
+
+        getUserLoaded(state) {
+            const { soundcheckAuth } = state;
+            return soundcheckAuth.loaded;
 
         }
     },

@@ -13,7 +13,6 @@ const SignIn = compose([withDispatch((dispatch, ownProps) => {
         onToken: (token) => {
             localStorage.setItem("jwt", token);
             soundcheckApiFetch({ path: "/v4/user" }).then(u => {
-                console.log("got user", u);
                 setUser(u);
             });
         }
@@ -141,13 +140,10 @@ const CodeForm = withState(
                         }
                     })
                     .then(r => {
-                        console.log("response", r);
-
                         onTokenReceived(r.token);
 
                     }
                     ).catch(e => {
-                        console.log(e);
                         setState({ error: e.message });
                     })
 

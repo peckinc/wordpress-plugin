@@ -14,9 +14,6 @@ const soundcheckApiFetch = ({ path, method, body }) => {
         }
     }
 
-
-    console.log("using token "+token);
-
     if (token) {
         soundcheckApiFetchOptions.headers["Authorization"] = "Bearer "+token;
     }
@@ -32,7 +29,6 @@ const soundcheckApiFetch = ({ path, method, body }) => {
             return fetch(apiPath,
                 options
             ).then((response) => {
-                console.log("fetch response",response);
                 if (response.status == 200) {
                     return response.json();
                 } else {
