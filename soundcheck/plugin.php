@@ -3,7 +3,7 @@
  * Plugin Name: Soundcheck
  * Plugin URI: https://soundcheck.ai/wordpress
  * Description: This is a plugin for managing content for smart speakers in WordPress posts.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Soundcheck
  *
  * @package soundcheck

@@ -24,6 +24,6 @@ services:
        WORDPRESS_DB_USER: wordpress
        WORDPRESS_DB_PASSWORD: wordpress
      volumes:
-       - ./soundcheck:/var/www/html/wp-content/plugins/soundcheck
+       - ./soundcheck/dist:/var/www/html/wp-content/plugins/soundcheck
 volumes:
     db_data:

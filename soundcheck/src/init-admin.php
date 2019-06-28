@@ -73,18 +73,17 @@ function soundcheck_admin_enqueue_script() {
 		// Scripts.
 		wp_enqueue_script(
 			'soundcheck-admin-js', // Handle.
-			plugins_url( '/dist/admin.build.js', dirname( __FILE__ ) ), 
+			plugins_url( '/admin.build.js', dirname( __FILE__ ) ), 
 			array( 'wp-components', 'wp-data', 'wp-element',  'wp-i18n', 'wp-compose', 'wp-html-entities'), // Dependencies, defined above.
-			filemtime( plugin_dir_path( __DIR__ ) . 'dist/admin.build.js' ), // Version: File modification time.
+			filemtime( plugin_dir_path( __DIR__ ) . 'admin.build.js' ), // Version: File modification time.
 			true // Enqueue the script in the footer.
 		);
 	
 		// Styles.
 		wp_enqueue_style(
 			'soundcheck-admin-css', // Handle.
-			plugins_url( 'dist/admin.build.css', dirname( __FILE__ ) ),
+			plugins_url( 'admin.build.css', dirname( __FILE__ ) ),
 			array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
-			// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
 		);
 
 	}
@@ -137,7 +136,7 @@ function soundcheck_admin_update_callback( $data ) {
 function sidebar_plugin_register() {
     wp_register_script(
         'soundcheck-sidebar-js',
-        plugins_url( '/dist/sidebar.build.js', dirname( __FILE__ ) ), 
+        plugins_url( '/sidebar.build.js', dirname( __FILE__ ) ), 
         array( 'wp-plugins', 'wp-edit-post', 'wp-element',  'wp-i18n' )
     );
 }
