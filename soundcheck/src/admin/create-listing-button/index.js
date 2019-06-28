@@ -7,7 +7,7 @@ const CreateListingButton = () => {
     let url = window.location.protocol + "//" + domain;
     let token = localStorage.getItem('jwt');
     let createListing = () => {
-        const destination = `${soundcheckUrl}/start/wordpress?url=${encodeURIComponent(url)}&token=${token}`;
+        const destination = `${soundcheckUrl}/app/start/wordpress?url=${encodeURIComponent(url)}&token=${token}`;
         window.location.href = destination;
     };
     return (

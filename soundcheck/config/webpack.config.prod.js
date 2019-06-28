@@ -142,7 +142,7 @@ module.exports = {
 					loader: 'file-loader',
 					options: {
 						outputPath: 'dist',
-						publicPath: '/wp-content/plugins/soundcheck/dist',
+						publicPath: '/wp-content/plugins/soundcheck',
 					},
 				},
 				]

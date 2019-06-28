@@ -1,6 +1,6 @@
 {
   "name": "soundcheck-wordpress",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The Soundcheck plugin for WordPress is the easiest way to publish web content that is optimized for voice devices like Amazon Echo and Google Home.",
   "author": "Daniel Tyreus <daniel@soundcheck.ai> (https://soundcheck.ai)",
   "license": "GPLv3",
@@ -10,8 +10,8 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "rm -rf dist && node scripts/build.js",
-    "dist": "sh scripts/dist.sh"
+    "build": "node scripts/build.js",
+    "dist": "rm -rf dist && npm run build && sh scripts/dist.sh"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.4",
