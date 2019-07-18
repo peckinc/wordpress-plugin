@@ -5,7 +5,7 @@ Tags: voice, alexa, speakable, google assistant, gutenberg
 Requires at least: 5.0.0
 Tested up to: 5.2.2
 Requires PHP: 5.2.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -45,3 +45,6 @@ A custom Gutenberg block for adding Speakable content to your posts.
 = 1.0.2 =
 * Fix image paths
 * Fix create path
+
+= 1.0.3 =
+* Fix broken links to help content

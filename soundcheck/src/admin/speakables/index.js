@@ -5,22 +5,27 @@ import { compose, withState } from '@wordpress/compose';
 import Table from '../components/table';
 import icons from '../../icons';
 import { extractSpeakables } from '../service/speakable-parser';
-import { soundeckUrl } from '../environment';
+import { soundcheckUrl } from '../environment';
 
 import './style.scss';
 
 const Speakables = ({ className }) => (
     <Panel header="Voice-Optimized Web Content" className={className ? className : ''}>
         <PanelBody>
-            <p><ExternalLink href={soundeckUrl + "/speakable-content"}>Speakable content</ExternalLink> is text on your website
+            <p><ExternalLink href={soundcheckUrl + "/speakable-content"}>Speakable content</ExternalLink> is text on your website
         that you designate as optimized for voice assistants. That means it is particularly suited to be read out loud using text to speech.</p>
-            <p>The tables below show posts hat contain speakable content. If the post has a valid <code>SpeakableSpecification</code>, the "FORMATTED"
-            column will be checked. If the post also has speakable content, the "SPEAKABLE" column will be checked. Click on a SPEAKABLE column check
-        to preview the content.</p>
-            <p>To add speakable content to any post use the "Speakable Section" block in the editor.</p>
         </PanelBody>
         <PostsPanelBody />
         <PagesPanelBody />
+        <PanelBody>
+            <p>The tables above show posts that contain speakable content.</p>
+            <ul>
+                <li>FORMATTED - the post has a valid <code>SpeakableSpecification</code>.</li>
+                <li>SPEAKABLE - the post contains "speakable" content.</li>
+            </ul>
+            <p>To add speakable content to any post use the "Speakable Section" block in the editor. Click on a SPEAKABLE column check mark
+            to preview the content.</p>
+        </PanelBody>
     </Panel>
 );
 

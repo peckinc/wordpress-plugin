@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Soundcheck
  * Plugin URI: https://soundcheck.ai/wordpress
- * Description: This is a plugin for managing content for smart speakers in WordPress posts.
- * Version: 1.0.2
+ * Description: The Soundcheck plugin is the easiest way to publish web content that is optimized for voice devices like Amazon Echo and Google Home. You get a new "Speakable" blog type and a voice admin screen to validate and preview your voice content.
+ * Version: 1.0.3
  * Author: Soundcheck
  *
  * @package soundcheck
