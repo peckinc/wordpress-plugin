@@ -1,6 +1,7 @@
 import { Panel, PanelBody, PanelRow, SelectControl, Spinner, ExternalLink } from '@wordpress/components';
+import {Fragment} from '@wordpress/element';
 import { withSelect, withDispatch } from '@wordpress/data';
-
+import Analytics from '../voice-apps/analytics';
 import './style.scss';
 import CommandPanelBody from './command';
 import Footer from '../components/footer';
@@ -40,7 +41,7 @@ const VoiceApps = withSelect((select, ownProps) => {
                                 <img src={soundcheck} width="128" />
                             </PanelRow>
                             <hr />
-                            <p>Start by creating a free Voice Listing.</p>
+                            <p>Start by signing up for a free Soundcheck account.</p>
                             <p>
                                 <CreateListingButton />
                             </p>
@@ -66,21 +67,37 @@ const VoiceAppsPanel = withSelect((select, ownProps) => {
         domain: hostname,
         loaded
     }
-})(({ className, selectedApp, loaded, domain }) => {
+})(({ className, selectedApp, loaded, icon, domain }) => {
 
     if (!loaded) {
         return <div></div>;
     } else if (selectedApp) {
-        return <Panel header="Voice Interactions" className={className ? className : ''}>
-            <PanelBody>
-                <p>Your Voice Interactions define how users can engange with your voice presence. Each interaction represents a question or command from a user and the response from the voice assistant.</p>
-                <p><ExternalLink href={`${soundcheckUrl}/app/properties/${selectedApp.id}/interactions`}>Manage Interactions</ExternalLink></p>
-                {selectedApp && <Panel header={`Interactions for ${selectedApp.domain}`} className={className ? className : ''}>
-                    {selectedApp && selectedApp.commands.map(c => (<CommandPanelBody app={selectedApp} command={c} />))}
-                </Panel>}
-                <Footer />
-            </PanelBody>
-        </Panel>
+        return <Fragment>
+
+            <Panel header="Voice Apps" className={className ? className : ''}>
+                <PanelBody
+                    title={`${selectedApp.term} Voice Activity`}
+                    icon={icon}
+                    initialOpen={true}
+                >
+                    <p>See which platforms are accessing your published voice content.</p>
+                    <p><ExternalLink href={`${soundcheckUrl}/app/properties/${selectedApp.id}/availability`}>Edit Availability</ExternalLink></p>
+
+                    <Analytics app={selectedApp}></Analytics>
+
+                </PanelBody>
+            </Panel>
+            <Panel header="Voice Interactions" className={className ? className : ''}>
+                <PanelBody>
+                    <p>Your Voice Interactions define how users can engange with your voice presence. Each interaction represents a question or command from a user and the response from the voice assistant.</p>
+                    <p><ExternalLink href={`${soundcheckUrl}/app/properties/${selectedApp.id}/interactions`}>Manage Interactions</ExternalLink></p>
+                    {selectedApp && <Panel className={className ? className : ''}>
+                        {selectedApp && selectedApp.commands.map(c => (<CommandPanelBody app={selectedApp} command={c} />))}
+                    </Panel>}
+                    <Footer />
+                </PanelBody>
+            </Panel>
+        </Fragment>
     } else {
         return <ListDomainPanel domain={domain}></ListDomainPanel>
     }

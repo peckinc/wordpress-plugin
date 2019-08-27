@@ -11,7 +11,7 @@ const CreateListingButton = () => {
         window.location.href = destination;
     };
     return (
-        <Button isPrimary onClick={createListing}>Create Listing for {domain}</Button>
+        <Button isPrimary onClick={createListing}>Sign Up With {domain}</Button>
     )
 }
 

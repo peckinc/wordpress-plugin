@@ -29,12 +29,12 @@ const VoiceHosting = withSelect((select, ownProps) => {
         return (
             <div className="flex-grid">
                 <div class="col margin-bottom">
-                    <Panel header="Voice Hosting">
+                    <Panel header="Bring Your Business to Voice">
                         <PanelBody>
-                            <p><strong>Soundcheck Voice Hosting makes your business or brand available on smart speakers and voice assistants.</strong></p>
-                            <p>Free Features:</p>
+                            <p><strong>Voice is the future. Are you ready for it?</strong></p>
+                            <p>Soundcheck is a free publishing tool to get your business onto voice devices. Discover the easiest way to publish content optimized for voice on your website or directly to smart speakers like Amazon Echo or Google Home.</p>
                             <ol>
-                                <li>Voice Listing to promote your voice presence.</li>
+                                <li>Monitor and understand how your web content is used by voice assistants.</li>
                                 <li>Easily define answers to common voice-initiated questions.</li>
                                 <li>Create and validate "Speakable" web content using custom editor blocks.</li>
                                 <li>Use WordPress as a voice CMS.</li>
@@ -46,7 +46,7 @@ const VoiceHosting = withSelect((select, ownProps) => {
                                 <img src={soundcheck} width="128" />
                             </PanelRow>
                             <hr />
-                            <p>Start by creating a free Voice Listing.</p>
+                            <p>Start by signing up for a free Soundcheck account.</p>
                             <p>
                                 <CreateListingButton />
                             </p>
@@ -90,12 +90,12 @@ const VoiceHostingPanel = withSelect((select, ownProps) => {
 
             </PanelBody>
             <PanelBody
-                title={`${domain} Voice Listing`}
+                title={`${domain} Voice Property`}
                 icon={icon}
                 initialOpen={true}
             >
-                {(selectedApp.authStatus != 'VALID') && <Notice status="info" isDismissible={false}>You will need to verify ownership of {selectedApp.domain} before your voice listing is published.</Notice>}
-                <p><ExternalLink href={`${soundcheckUrl}/app/properties/${selectedApp.id}/listing`}>Edit Voice Listing</ExternalLink> <ExternalLink href={`${soundcheckUrl}/voice/${selectedApp.domain}`}>View Voice Listing</ExternalLink></p>
+                {(selectedApp.authStatus != 'VALID') && <Notice status="info" isDismissible={false}>You will need to verify ownership of {selectedApp.domain} before your voice property is published.</Notice>}
+                <p><ExternalLink href={`${soundcheckUrl}/app/properties/${selectedApp.id}/settings`}>Edit Voice Property</ExternalLink></p>
                 <PanelRow>
                     <img src={selectedApp.banner1920x1080} style={{ maxWidth: "100%" }} />
                 </PanelRow>
