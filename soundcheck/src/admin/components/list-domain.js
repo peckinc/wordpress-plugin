@@ -9,10 +9,10 @@ const ListDomainPanel = ({domain}) => {
         <Panel header="Soundcheck Voice Hosting">
             <PanelBody>
                 <Notice status="warning" isDismissible={false}>
-                    This domain {domain} is not listed with Soundcheck.
+                    This domain {domain} is not signed up with Soundcheck.
                     </Notice>
 
-                <p>You can list your domain for free and start making your business ready for voice.</p>
+                <p>You can sign up for free and start bringing your business to voice.</p>
                 <p>
                 <CreateListingButton/>
                 </p>

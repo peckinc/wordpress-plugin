@@ -24,7 +24,7 @@ const VoiceApps = withSelect((select, ownProps) => {
     }
 })(({ user, loaded }) => {
     if (!loaded) {
-        return <div></div>;
+        return <Spinner></Spinner>;
     } else if (user) {
         return <VoiceAppsPanel className="margin-bottom"></VoiceAppsPanel>;
     } else {
@@ -70,7 +70,7 @@ const VoiceAppsPanel = withSelect((select, ownProps) => {
 })(({ className, selectedApp, loaded, icon, domain }) => {
 
     if (!loaded) {
-        return <div></div>;
+        return <Spinner></Spinner>;
     } else if (selectedApp) {
         return <Fragment>
 

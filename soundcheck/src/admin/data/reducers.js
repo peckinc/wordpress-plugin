@@ -7,6 +7,7 @@ const DEFAULT_STATE = {
         selectedAppId: null,
         apps: [],
         stats: {},
+        news: {},
         sources: {},
         loaded: false
     },
@@ -51,6 +52,11 @@ const voiceApps = (state = DEFAULT_STATE.voiceApps, action) => {
             return {
                 ...state,
                 sources: { ...state.sources, [action.commandId]: action.sources }
+            };
+        case 'VOICEAPPS_SET_NEWS':
+            return {
+                ...state,
+                news: { ...state.news, [action.appId]: action.news }
             };
         case 'VOICEAPPS_SET_STATS':
             const time = Math.round((action.end - action.start) / 1000 / 3600 / 24);

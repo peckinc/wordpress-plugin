@@ -30,9 +30,9 @@ const TableRow = ({ row }) => {
         <div className="soundcheck-table_row">
             {row.map((cell, index) => {
                 if (cell.component) {
-                    return <div key={index} className="soundcheck-table_data" >{cell.component}</div>
+                    return <div key={index} className={`soundcheck-table_data ${(cell.align == 'center') ? ' soundcheck-table_data_center':''}`}>{cell.component}</div>
                 } else {
-                    return <div key={index} className="soundcheck-table_data" dangerouslySetInnerHTML={{__html: cell.value}}></div>
+                    return <div key={index} className={`soundcheck-table_data ${(cell.align == 'center') ? ' soundcheck-table_data_center':''}`} dangerouslySetInnerHTML={{__html: cell.value}}></div>
                 }
             })}
         </div>

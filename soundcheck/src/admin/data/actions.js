@@ -54,6 +54,14 @@ const actions = {
         };
     },
 
+    setSpeakableNews(appId,news) {
+        return {
+            type: 'VOICEAPPS_SET_NEWS',
+            appId,
+            news
+        };
+    },
+
     setUser(user) {
         return {
             type: 'AUTH_SET_USER',

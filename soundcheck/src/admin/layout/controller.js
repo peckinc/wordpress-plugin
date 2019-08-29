@@ -3,7 +3,7 @@ import { compose, withState } from '@wordpress/compose';
 
 import Dashboard from '../dashboard';
 import VoiceApps from '../voice-apps';
-import VoiceHosting from '../voice-hosting';
+import SpeakableNews from '../speakable-news';
 
 let uri = window.location.search;
 
@@ -18,8 +18,8 @@ const Controller = withState(
 	switch (route) {
 		case 'soundcheck-structured-data':
 			return 
-		case 'soundcheck-voice-hosting':
-			return <VoiceHosting></VoiceHosting>
+		case 'soundcheck-speakable-news':
+			return <SpeakableNews></SpeakableNews>
 		case 'soundcheck-voice-interactions':
 			return <VoiceApps></VoiceApps>
 		default:

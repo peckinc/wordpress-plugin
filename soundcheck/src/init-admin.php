@@ -34,10 +34,10 @@ function soundcheck_register_page() {
 
 	add_submenu_page(
 		'soundcheck-admin',
-		__( 'Voice Hosting', 'soundcheck-admin' ),
-		__( 'Voice Hosting', 'soundcheck-admin' ),
+		__( 'Speakable News', 'soundcheck-admin' ),
+		__( 'Speakable News', 'soundcheck-admin' ),
 		'manage_options',
-		'soundcheck-voice-hosting',
+		'soundcheck-speakable-news',
 		'soundcheck_admin_page'
 	);
 

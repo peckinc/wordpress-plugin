@@ -56,6 +56,13 @@ registerStore('soundcheck', {
 
         },
 
+        getSpeakableNews(state, appId) {
+            const { voiceApps } = state;
+
+            return voiceApps.news[appId];
+
+        },
+
         getUser(state) {
             const { soundcheckAuth } = state;
             return soundcheckAuth.user;
@@ -112,6 +119,12 @@ registerStore('soundcheck', {
             const path = `/v4/user/voice_apps/${voiceAppId}/commands/${commandId}/sources`;
             const sources = yield actions.fetchFromSoundcheckAPI(path)
             return actions.setCommandSources(commandId, sources);
+        },
+
+        * getSpeakableNews(voiceAppId) {
+            const path = `/v4/user/voice_apps/${voiceAppId}/news`;
+            const news = yield actions.fetchFromSoundcheckAPI(path)
+            return actions.setSpeakableNews(voiceAppId, news);
         },
 
         * getUser() {

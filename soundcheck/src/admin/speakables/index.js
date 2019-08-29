@@ -1,12 +1,12 @@
 import { Component, Fragment } from '@wordpress/element';
-import { Panel, PanelBody, PanelRow, Spinner, Modal, ExternalLink } from '@wordpress/components';
+import { Panel, PanelBody, PanelRow, Spinner, Modal, ExternalLink, withSpokenMessages, Button } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 import { compose, withState } from '@wordpress/compose';
 import Table from '../components/table';
 import icons from '../../icons';
 import { extractSpeakables } from '../service/speakable-parser';
 import { soundcheckUrl } from '../environment';
-
+import SpeakableIcon from '../components/speakable-icon';
 import './style.scss';
 
 const Speakables = ({ className }) => (
@@ -72,9 +72,9 @@ const HtmlLoadingSpeakablePanelBody = withState({
     }
     const formattedData = data.map(row => [
         { component: <a href={row.link} dangerouslySetInnerHTML={{ __html: row.title.rendered }}></a> },
-        { value: (new Date(row.date)).toLocaleDateString() },
-        { component: <SpeakableIcon isLoading={!row.loaded} isValid={row.hasSpeakableSpecification} color={icons.colors.speakable_purple} tooltip="Valid Specification" /> },
-        { component: <ValidatingSpeakableIcon isLoading={!row.loaded} validations={row.validations} content={row.content} /> }]);
+        { value: (new Date(row.date)).toLocaleDateString(), align:'center' },
+        { component: <SpeakableIcon isLoading={!row.loaded} isValid={row.hasSpeakableSpecification} color={icons.colors.speakable_purple} tooltip="Valid Specification" />, align:'center' },
+        { component: <ValidatingSpeakableIcon isLoading={!row.loaded} validations={row.validations} content={row.content} />, align:'center' }]);
     return (
         <PanelBody
             title={`${type}s`}
@@ -122,17 +122,6 @@ const PagesPanelBody = withSelect((select, ownProps) => {
     };
 })(HtmlLoadingSpeakablePanelBody);
 
-
-const SpeakableIcon = ({ isLoading, isValid, tooltip, color }) => {
-    if (isLoading) {
-        return <Spinner />;
-    } else if (isValid) {
-        return icons.speakable(tooltip, color);
-    } else {
-        return <span className="dashicons dashicons-minus"></span>
-    }
-}
-
 const ValidatingSpeakableIcon = withState({ isOpen: false })(({ isLoading, isOpen, validations, content, setState }) => {
 
     if (isLoading) {
@@ -167,8 +156,9 @@ const SpeakableModal = ({ validations, content, onRequestClose }) => {
                 : <p><span className="dashicons dashicons-yes"></span> Valid Speakable content.</p>}
             <hr />
             <p>Preview</p>
-            <p class="description">{content}</p>
+            <blockquote>{content}</blockquote>
         </Modal>
     )
 }
+
 export default Speakables;

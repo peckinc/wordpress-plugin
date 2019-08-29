@@ -22,6 +22,17 @@
 
     &_data, &_header-item {
         flex: 1 1 20%;
+    }
+
+    &_header-item {
+        text-align:center;
+    }
+
+    &_data {
+        padding:0 ($gap * 0.5);
+    }
+
+    &_data_center {
         text-align:center;
     }
 
