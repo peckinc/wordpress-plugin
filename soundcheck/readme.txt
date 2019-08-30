@@ -1,7 +1,7 @@
 === Soundcheck ===
 Contributors: peckdaniel
 Donate link: https://soundcheck.ai
-Tags: voice, alexa, speakable, google assistant, gutenberg
+Tags: voice, alexa, speakable, google assistant
 Requires at least: 5.0
 Tested up to: 5.2.2
 Requires PHP: 5.2.4
@@ -9,7 +9,7 @@ Stable tag: 1.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
-Reach a wider audience and attract voice consumers with "speakable" content. The easiest way to publish web content for smart speakers.
+Reach a wider audience and attract voice consumers with "speakable" content. Soundcheck is the easiest way to publish web content for smart speakers.
 
 == Description ==
 
@@ -17,7 +17,7 @@ Reach a wider audience and attract voice consumers with "speakable" content. The
 
 Looking for a way to reach the growing number of people who rely on voice search for the latest news and information? As consumers initiate requests for news updates through voice devices, the responses have to be in voice too.
 
-The Soundcheck plugin for WordPress is the easiest way to publish web content that is optimized for voice devices like Amazon Echo and Google Home. The plugin integrates directly with the new Gutenberg editor to make adding speakable content as easy as point, click, and type. The plugin validates posts to check for for the correct speakable markup and lets your preview what voice assistants may dictate from your page. Finally, use copy from your voice-optimized website as spoken content for voice assistants, making WordPress a true CMS for voice.
+The Soundcheck plugin for WordPress is the easiest way to publish web content that is optimized for voice devices like Amazon Echo and Google Home. The plugin integrates directly with the new Gutenberg editor to make adding `speakable` content as easy as point, click, and type. The plugin validates posts to check for for the correct `speakable` markup and lets your preview what voice assistants may dictate from your page. Finally, use copy from your voice-optimized website as spoken content for voice assistants, making WordPress a true CMS for voice.
 
 #### Introduction to Speakable Content
 
@@ -26,9 +26,9 @@ Google adopted an open schema.org specification called `speakable` to help the G
 #### "Speakable" Content Blocks
 
 A custom Gutenberg block for adding `speakable` content to your posts.
+
 * Include copy that is optimized for text-to-speech.
 * Automatically generate the required structured data with no coding.
-* Let voice assistants discover and dictate your web content.
 
 #### Validate and Preview
 
@@ -43,7 +43,7 @@ If you are a Google News Publisher or Producer, expand your reach to a wider voi
 > "Hey Google, what's the latest news about $topic?"
 > "Hey Google, play news about $topic." 
 
-* Monitors when posts are coming up in Google News.
+* Monitors when posts come up in Google News.
 * Validates your posts to make sure they have eligible `speakable` content.
 
 ### More Info
@@ -56,9 +56,9 @@ If you are a Google News Publisher or Producer, expand your reach to a wider voi
  
 = Do I need to create an account? =
  
-The speakable content blocks and validation are all available without a Soundcheck account. You do need to create a free account to use the automated monitoring features.
+The `speakable` content blocks and validation are all available without a Soundcheck account. You do need to create a free account to use the automated monitoring features.
  
-= Does this only work for news producers? =
+= Does this only work for news organizations? =
  
 No, any website can benefit from `speakable` content. But there are added benefits for Google News Producers.
 
