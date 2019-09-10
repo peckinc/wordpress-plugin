@@ -53,17 +53,6 @@ function soundcheck_register_page() {
 
 add_action( 'admin_menu', 'soundcheck_register_page' );
 
-/**
- * Set up a div for the app to render into.
- */
-function soundcheck_admin_page() {
-	?>
-	<div class="wrap">
-		<div id="soundcheck-root"></div>
-	</div>
-	<?php
-}
-
 function soundcheck_admin_enqueue_script() {
 
 	global $hook_suffix;
@@ -91,7 +80,7 @@ function soundcheck_admin_enqueue_script() {
 add_action( 'admin_enqueue_scripts', 'soundcheck_admin_enqueue_script' );
 
 /**
- * Register Hello Gutenberg Meta Field to Rest API
+ * Register Meta Field to Rest API
  */
 function soundcheck_admin_register_meta() {
 	register_meta(
@@ -105,7 +94,7 @@ function soundcheck_admin_register_meta() {
 add_action( 'init', 'soundcheck_admin_register_meta' );
 
 /**
- * Register PVT Metabox to Rest API
+ * Register Metabox to Rest API
  */
 function soundcheck_admin_api_posts_meta_field() {
 	register_rest_route(
@@ -146,3 +135,153 @@ function sidebar_plugin_script_enqueue() {
     wp_enqueue_script( 'soundcheck-sidebar-js' );
 }
 add_action( 'enqueue_block_editor_assets', 'sidebar_plugin_script_enqueue' );
+
+
+/**
+ * custom option and settings
+ */
+function soundcheck_settings_init() {
+	// register a new setting for "soundcheck_options" page
+	register_setting( 
+		'soundcheck', //option group
+		'soundcheck_options' //options array name
+	);
+	
+	// register a new section in the "soundcheck_options" page
+	add_settings_section(
+		'soundcheck_section_structured_data', // id
+		__( 'Speakable Structured Data', 'soundcheck' ), // title
+		'soundcheck_section_structured_data_cb', //callback
+		'soundcheck-settings' //page
+	);
+	
+	add_settings_field(
+		'soundcheck_field_sd', // as of WP 4.6 this value is used only internally
+		// use $args' label_for to populate the id inside the callback
+		__( 'Enabled', 'soundcheck-admin' ), // title
+		'soundcheck_field_sd_cb', // callback
+		'soundcheck-settings', // page
+		'soundcheck_section_structured_data', //section
+		[
+			'label_for' => 'soundcheck_field_sd'
+		]
+	);
+
+	add_settings_field(
+		'soundcheck_field_selector', // as of WP 4.6 this value is used only internally
+		// use $args' label_for to populate the id inside the callback
+		__( 'Selector', 'soundcheck-admin' ), // title
+		'soundcheck_field_selector_cb', // callback
+		'soundcheck-settings', // page
+		'soundcheck_section_structured_data', //section
+		[
+			'label_for' => 'soundcheck_field_selector'
+		]
+	);
+   }
+	
+/**
+* register our wporg_settings_init to the admin_init action hook
+*/
+add_action( 'admin_init', 'soundcheck_settings_init' );
+	
+function soundcheck_section_structured_data_cb( $args ) {
+	?>
+	<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Default settings that can be changed per-post.', 'soundcheck-admin' ); ?></p>
+	<?php
+}
+
+function soundcheck_field_selector_cb( $args ) {
+	// get the value of the setting we've registered with register_setting()
+	$options = get_option( 'soundcheck_options' );
+	// output the field
+	?>
+	<select id="<?php echo esc_attr( $args['label_for'] ); ?>" 
+		name="soundcheck_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+	>
+		<option value="block" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'block', false ) ) : ( '' ); ?>>
+		<?php esc_html_e( 'Speakable Block', 'soundcheck-admin' ); ?>
+		</option>
+		<option value="meta_desc" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'meta_desc', false ) ) : ( '' ); ?>>
+		<?php esc_html_e( 'Meta Description', 'soundcheck-admin' ); ?>
+		</option>
+		<option value="speak_css" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'speak_css', false ) ) : ( '' ); ?>>
+		<?php esc_html_e( '.speakable CSS Class', 'soundcheck-admin' ); ?>
+		</option>
+	</select>
+	<p class="description">
+		<?php esc_html_e( '[Advanced] Override the content selected as speakable.', 'wporg' ); ?>
+	</p>
+	<?php
+}
+
+function soundcheck_field_sd_cb( $args ) {
+	// get the value of the setting we've registered with register_setting()
+	$options = get_option( 'soundcheck_options' );
+	// output the field
+	?>
+	<input type="checkbox" 
+		id="<?php echo esc_attr( $args['label_for'] ); ?>" 
+		name="soundcheck_options[<?php echo esc_attr( $args['label_for'] ); ?>]" 
+		value="enabled"
+		<?php echo isset( $options[ $args['label_for'] ] ) ? ( checked( $options[ $args['label_for'] ], 'enabled' ) ) : ( '' );?>> Add Speakable Structured Data<br>
+	
+	<p class="description">
+		<?php esc_html_e( 'Unless you have another plugin that is adding speakable structured data, this should be enabled.', 'soundcheck-admin' ); ?>
+	</p>
+
+
+	<?php
+}
+
+
+/*************
+ * HTML Page renderers
+ *************/
+
+
+function soundcheck_settings_page() {
+	// check user capabilities
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	
+	// add error/update messages
+	
+	// check if the user have submitted the settings
+	// wordpress will add the "settings-updated" $_GET parameter to the url
+	if ( isset( $_GET['settings-updated'] ) ) {
+		// add settings saved message with the class of "updated"
+		add_settings_error( 'soundcheck_messages', 'soundcheck_message', __( 'Settings Saved', 'soundcheck-admin' ), 'updated' );
+	}
+	
+	// show error/update messages
+	settings_errors( 'soundcheck_messages' );
+	?>
+
+		<div class="wrap">
+		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+		<form action="options.php" method="post">
+
+	<?php
+	// output security fields for the registered setting "soundcheck"
+	settings_fields( 'soundcheck' );
+	// output setting sections and their fields
+	// (sections are registered for "soundcheck", each field is registered to a specific section)
+	do_settings_sections( 'soundcheck-settings' );
+	// output save settings button
+	submit_button( 'Save Settings' );
+
+	?>
+		</form>
+		</div>
+	<?php
+}
+
+function soundcheck_admin_page() {
+	?>
+	<div class="wrap">
+		<div id="soundcheck-root"></div>
+	</div>
+	<?php
+}
