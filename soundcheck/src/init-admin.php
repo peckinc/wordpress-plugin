@@ -90,6 +90,13 @@ function soundcheck_admin_register_meta() {
 			'show_in_rest'	=> true,
 		)
 	);
+	register_meta(
+		'post', '_soundcheck_speakable_selectors', array(
+			'type'			=> 'string',
+			'single'		=> true,
+			'show_in_rest'	=> true,
+		)
+	);
 }
 add_action( 'init', 'soundcheck_admin_register_meta' );
 
@@ -108,6 +115,17 @@ function soundcheck_admin_api_posts_meta_field() {
 			),
 		)
 	);
+	register_rest_route(
+		'soundcheck-admin/v1', '/get-settings', array(
+			'methods'  => 'GET',
+			'callback' => 'soundcheck_admin_settings_callback',
+			'args'     => array(
+				'id' => array(
+					'sanitize_callback' => 'absint',
+				),
+			),
+		)
+	);
 }
 add_action( 'rest_api_init', 'soundcheck_admin_api_posts_meta_field' );
 
@@ -115,11 +133,16 @@ add_action( 'rest_api_init', 'soundcheck_admin_api_posts_meta_field' );
  * Soundcheck REST API Callback for Gutenberg
  */
 function soundcheck_admin_update_callback( $data ) {
-	$keys = array('_soundcheck_include_speakable_sd');
+	$keys = array('_soundcheck_include_speakable_sd','_soundcheck_speakable_selectors');
 	foreach ($keys as $key) {
 		error_log('updating post meta '.$key.' to '.$data[$key]);
 		update_post_meta( $data['id'], $key, $data[$key] );
 	}
+}
+
+function soundcheck_admin_settings_callback( $data ) {
+	$options = get_option( 'soundcheck_options' );
+	return $options;
 }
 
 function sidebar_plugin_register() {
