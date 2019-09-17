@@ -49,6 +49,15 @@ function soundcheck_register_page() {
 		'soundcheck-voice-interactions',
 		'soundcheck_admin_page'
 	);
+
+	add_submenu_page(
+		'soundcheck-admin',
+		__( 'Soundcheck Settings', 'soundcheck-admin' ),
+		__( 'Settings', 'soundcheck-admin' ),
+		'manage_options',
+		'soundcheck-settings',
+		'soundcheck_settings_page'
+	);
 }
 
 add_action( 'admin_menu', 'soundcheck_register_page' );
@@ -57,7 +66,7 @@ function soundcheck_admin_enqueue_script() {
 
 	global $hook_suffix;
 	error_log($hook_suffix);
-	$page_match = preg_match('/^toplevel_page_soundcheck-[\w-]*$|^soundcheck_page_soundcheck-[\w-]*$/',$hook_suffix);
+	$page_match = preg_match('/^toplevel_page_soundcheck-[\w-]*$|^soundcheck_page_soundcheck-[voice\-interactions|speakable\-news|admin]*$/',$hook_suffix);
 	if ($page_match) {
 		// Scripts.
 		wp_enqueue_script(

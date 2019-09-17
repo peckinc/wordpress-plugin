@@ -23,6 +23,8 @@ services:
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_USER: wordpress
        WORDPRESS_DB_PASSWORD: wordpress
+       WORDPRESS_DEBUG: 1
+       WORDPRESS_DEBUG_LOG: 1
      volumes:
        - ./soundcheck/dist:/var/www/html/wp-content/plugins/soundcheck
 

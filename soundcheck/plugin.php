@@ -3,7 +3,7 @@
  * Plugin Name: Soundcheck
  * Plugin URI: https://soundcheck.ai/wordpress
  * Description: The Soundcheck plugin is the easiest way to publish web content that is optimized for voice devices like Amazon Echo and Google Home. You get a new "Speakable" block type and a voice admin screen to validate and preview your voice content.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Soundcheck
  *
  * @package soundcheck
@@ -60,7 +60,24 @@ function output_structured_data() {
 	$post_id = get_the_ID();
 	$meta = get_post_meta($post_id);
 	if ( $meta["_soundcheck_include_speakable_sd"] && $meta["_soundcheck_include_speakable_sd"][0] ) {
-		$speakable = array("@type" => "SpeakableSpecification", "cssSelector" => array(".is-style-speakable", ".wp-block-soundcheck-speakable"));
+
+		$cssSelector = array(".is-style-speakable", ".wp-block-soundcheck-speakable");
+		if ( $meta["_soundcheck_speakable_selectors"] && $meta["_soundcheck_speakable_selectors"][0] ) {
+			$selectors = $meta["_soundcheck_speakable_selectors"][0];
+			$cssSelector = array();
+			if (strpos($selectors, 'block') !== false) {
+				array_push($cssSelector,".is-style-speakable");
+				array_push($cssSelector,".wp-block-soundcheck-speakable");
+			}
+			if (strpos($selectors, 'meta_desc') !== false) {
+				array_push($cssSelector,"meta[name='description']");
+			}
+			if (strpos($selectors, 'speak_css') !== false) {
+				array_push($cssSelector,".speakable");
+			}
+		}
+
+		$speakable = array("@type" => "SpeakableSpecification", "cssSelector" => $cssSelector);
 		$sd = array("@context" => "http://schema.org/", "@type" => "WebPage", "speakable" => $speakable);
 		echo '<script type="application/ld+json">' . wp_json_encode($sd) . '</script>';
 	}

@@ -6,8 +6,9 @@ class StructuredData extends Component {
 		super(...arguments);
 
 		this.state = {
-			includeJson: true,
-			selectors: []
+			includeJson: false,
+			selectors: [],
+			initialized: false
 		}
 
 
@@ -20,24 +21,23 @@ class StructuredData extends Component {
 			soundcheck_field_sd: settings.soundcheck_field_sd ? settings.soundcheck_field_sd : 'enabled',
 			soundcheck_field_selector: settings.soundcheck_field_selector ? settings.soundcheck_field_selector : 'block'
 		}
-		console.log(settings);
 		let data = await wp.apiFetch({ path: `/wp/v2/posts/${this.props.postId}`, method: 'GET' });
-		console.log(data);
-		return this.setState({
-			includeJson: data.meta._soundcheck_include_speakable_sd ? data.meta._soundcheck_include_speakable_sd : defaults.soundcheck_field_sd,
-			selectors: data.meta._soundcheck_speakable_selectors ? JSON.parse(data.meta._soundcheck_speakable_selectors) : [defaults.soundcheck_field_selector]
-		});
+		//data.meta._soundcheck_speakable_selectors is initialized to "" whereas data.meta._soundcheck_include_speakable_sd is set to false
+		let state = {
+			includeJson: data.meta._soundcheck_speakable_selectors ? data.meta._soundcheck_include_speakable_sd : (defaults.soundcheck_field_sd == 'enabled'),
+			selectors: data.meta._soundcheck_speakable_selectors ? JSON.parse(data.meta._soundcheck_speakable_selectors) : [defaults.soundcheck_field_selector],
+			initialized: true
+		}
+		return this.setState(state);
 
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		console.log('updating', prevState)
-		console.log(this.state);
 		let current = JSON.stringify(this.state);
 		let prev = JSON.stringify(prevState);
-		if (current != prev) {
+		if (prevState.initialized && (current != prev)) {
 			let data = {
-				_soundcheck_include_speakable_sd: this.state.includeJson,
+				_soundcheck_include_speakable_sd: this.state.includeJson ? 1 : 0,
 				_soundcheck_speakable_selectors: JSON.stringify(this.state.selectors)
 			}
 			return wp.apiRequest({ path: `/soundcheck-admin/v1/update-structured-data?id=${prevProps.postId}`, method: 'POST', data: data }).then(
@@ -56,22 +56,7 @@ class StructuredData extends Component {
 		if (selected) {
 			selectors.push(key);
 		}
-		console.log('updated selectors', selectors);
 		this.setState({ selectors });
-	}
-
-	updateSettingsApi() {
-		let data = {
-			_soundcheck_include_speakable_sd: state.includeJson
-		}
-		return wp.apiRequest({ path: `/soundcheck-admin/v1/update-structured-data?id=${nextProps.postId}`, method: 'POST', data: data }).then(
-			(data) => {
-				return data;
-			},
-			(err) => {
-				return err;
-			}
-		);
 	}
 
 	render() {
@@ -104,7 +89,7 @@ class StructuredData extends Component {
 						onChange={(isChecked) => { this.updateSelector(isChecked, 'meta_desc') }}
 					/>
 					<CheckboxControl
-						label="Meta Description"
+						label=".speakable CSS"
 						checked={cssChecked}
 						onChange={(isChecked) => { this.updateSelector(isChecked, 'speak_css') }}
 					/>

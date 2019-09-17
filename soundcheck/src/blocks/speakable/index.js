@@ -24,8 +24,8 @@ const { PanelBody, SelectControl, ToggleControl } = wp.components;
 import icons from '../../icons';
 
 const applyWithColors = withColors(
-	'backgroundColor',
-	{ textColor: 'color' },
+    'backgroundColor',
+    { textColor: 'color' },
 );
 
 const attributes = {
@@ -90,9 +90,13 @@ registerBlockType('soundcheck/speakable', {
             <Fragment>
                 {isSelected &&
                     <InspectorControls>
-                        <PanelBody title={"Structured Data"}>
-                            <p>In order for search engines to locate the speakable content on your site, make sure 
-                                you have the correct <code>SpeakableSpecification</code> in your post's structured data.</p>
+                        <PanelBody title={"Content Guidelines"}>
+                            <p>Follow these guidelines when writing speakable content.</p>
+                            <ul>
+                                <li>Your content should have concise headlines and/or summaries that provide users with comprehensible and useful information.</li>
+                                <li>Break up information into individual sentences so that it reads more clearly for TTS.</li>
+                                <li>For optimal audio user experiences, Google recommends around 20-30 seconds of content per section of speakable structured data, or roughly two to three sentences.</li>
+                            </ul>
                         </PanelBody>
                     </InspectorControls>
                 }
@@ -132,20 +136,20 @@ registerBlockType('soundcheck/speakable', {
 
             save: function (props) {
                 let content = <RichText.Content tagName="p" value={props.attributes.content} className="wp-block-soundcheck-speakable" />;
-                    let json = {
-                        "@context": "http://schema.org/",
-                        "@type": (props.attributes.jsonType ? props.attributes.jsonType : "WebPage"),
-                        speakable: {
-                            "@type": "SpeakableSpecification",
-                            cssSelector: [".is-style-speakable", ".wp-block-soundcheck-speakable"]
-                        }
+                let json = {
+                    "@context": "http://schema.org/",
+                    "@type": (props.attributes.jsonType ? props.attributes.jsonType : "WebPage"),
+                    speakable: {
+                        "@type": "SpeakableSpecification",
+                        cssSelector: [".is-style-speakable", ".wp-block-soundcheck-speakable"]
                     }
+                }
 
-                    let micro = wp.element.createElement('script', { type: "application/ld+json" }, JSON.stringify(json));
-                    return <Fragment>
-                        {micro}
-                        {content}
-                    </Fragment>;
+                let micro = wp.element.createElement('script', { type: "application/ld+json" }, JSON.stringify(json));
+                return <Fragment>
+                    {micro}
+                    {content}
+                </Fragment>;
             }
         },
         {

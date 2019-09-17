@@ -5,7 +5,7 @@ Tags: voice, alexa, speakable, google assistant
 Requires at least: 5.0
 Tested up to: 5.2.2
 Requires PHP: 5.2.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -82,3 +82,7 @@ No, any website can benefit from `speakable` content. But there are added benefi
 = 1.1.0 =
 * Fix broken links to help content
 * Speakable News module to for Google News Producers and Publishers to track when news article highlights are eligible for dictation on Google Home.
+
+= 1.1.1 =
+* Global settings page to configure speakable structured data
+* More configuration options in the sidebar

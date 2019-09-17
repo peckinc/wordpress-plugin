@@ -116,7 +116,6 @@ const ArticlesPanelBody = withSelect((select, ownProps) => {
     const { getSpeakableNews } = select('soundcheck');
     let news = getSpeakableNews(ownProps.voiceApp.id);
 
-    console.log(news);
     return {
         data: news
     };

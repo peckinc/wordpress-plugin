@@ -19,8 +19,8 @@ const DEFAULT_STATE = {
 };
 
 const speakables = (state = DEFAULT_STATE.speakables, action) => {
-    console.log("speakables reducing", action);
-    console.log(state);
+    // console.log("speakables reducing", action);
+    // console.log(state);
     switch (action.type) {
         case 'SPEAKABLE_SET_POSTS':
             return {
@@ -38,8 +38,8 @@ const speakables = (state = DEFAULT_STATE.speakables, action) => {
 };
 
 const voiceApps = (state = DEFAULT_STATE.voiceApps, action) => {
-    console.log("voiceapps reducing", action);
-    console.log(state);
+    // console.log("voiceapps reducing", action);
+    // console.log(state);
     switch (action.type) {
         case 'VOICEAPPS_SET_APPS':
             return {
@@ -82,11 +82,10 @@ const voiceApps = (state = DEFAULT_STATE.voiceApps, action) => {
 };
 
 const soundcheckAuth = (state = DEFAULT_STATE.soundcheckAuth, action) => {
-    console.log("auth reducing", action);
-    console.log(state);
+    // console.log("auth reducing", action);
+    // console.log(state);
     switch (action.type) {
         case 'AUTH_SET_USER':
-        console.log("SETTING USER",action.user)
             return {
                 ...state,
                 user: action.user,
