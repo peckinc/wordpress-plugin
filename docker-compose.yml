@@ -27,6 +27,7 @@ services:
        WORDPRESS_DEBUG_LOG: 1
      volumes:
        - ./soundcheck/dist:/var/www/html/wp-content/plugins/soundcheck
+#       - ../speakable-twentynineteen:/var/www/html/wp-content/themes/soundcheck
 
    adminer:
      image: adminer

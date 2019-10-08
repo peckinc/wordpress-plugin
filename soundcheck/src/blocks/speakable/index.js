@@ -9,24 +9,18 @@ import './style.scss';
 import './editor.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const { registerBlockType, createBlock } = wp.blocks; // Import registerBlockType() from wp.blocks
 const {
     RichText,
     AlignmentToolbar,
     BlockControls,
-    InspectorControls,
-    withColors
+    InspectorControls
 } = wp.editor;
 
 const { Fragment } = wp.element;
 const { PanelBody, SelectControl, ToggleControl } = wp.components;
 
 import icons from '../../icons';
-
-const applyWithColors = withColors(
-    'backgroundColor',
-    { textColor: 'color' },
-);
 
 const attributes = {
     content: {
@@ -130,6 +124,20 @@ registerBlockType('soundcheck/speakable', {
         return <RichText.Content tagName="p" value={props.attributes.content} className="wp-block-soundcheck-speakable" />;
     },
 
+    transforms: {
+        to: [
+            {
+                type: 'block',
+                blocks: [ 'core/paragraph' ],
+                transform: ( { content } ) => {
+                    return createBlock( 'core/paragraph', {
+                        content,
+                    } );
+                },
+            },
+        ],
+    },
+
     deprecated: [
         {
             attributes: attributes,
@@ -162,7 +170,14 @@ registerBlockType('soundcheck/speakable', {
     ]
 });
 
-wp.blocks.registerBlockStyle('core/paragraph', {
-    name: 'speakable',
-    label: 'Speakable'
-});
+wp.blocks.registerBlockStyle('core/paragraph', [
+    {
+        name: 'default',
+        label: 'Default',
+        isDefault: true,
+    },
+    {
+        name: 'speakable',
+        label: 'Speakable'
+    }
+]);
