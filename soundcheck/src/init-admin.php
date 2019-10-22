@@ -43,15 +43,6 @@ function soundcheck_register_page() {
 
 	add_submenu_page(
 		'soundcheck-admin',
-		__( 'Voice Interactions', 'soundcheck-admin' ),
-		__( 'Voice Interactions', 'soundcheck-admin' ),
-		'manage_options',
-		'soundcheck-voice-interactions',
-		'soundcheck_admin_page'
-	);
-
-	add_submenu_page(
-		'soundcheck-admin',
 		__( 'Soundcheck Settings', 'soundcheck-admin' ),
 		__( 'Settings', 'soundcheck-admin' ),
 		'manage_options',
@@ -144,7 +135,7 @@ add_action( 'rest_api_init', 'soundcheck_admin_api_posts_meta_field' );
 function soundcheck_admin_update_callback( $data ) {
 	$keys = array('_soundcheck_include_speakable_sd','_soundcheck_speakable_selectors');
 	foreach ($keys as $key) {
-		error_log('updating post meta '.$key.' to '.$data[$key]);
+		//error_log('updating post meta '.$key.' to '.$data[$key]);
 		update_post_meta( $data['id'], $key, $data[$key] );
 	}
 }

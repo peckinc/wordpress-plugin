@@ -6,9 +6,7 @@ const DEFAULT_STATE = {
     voiceApps: {
         selectedAppId: null,
         apps: [],
-        stats: {},
         news: {},
-        sources: {},
         loaded: false
     },
     soundcheckAuth: {
@@ -48,28 +46,10 @@ const voiceApps = (state = DEFAULT_STATE.voiceApps, action) => {
                 selectedAppId: (action.apps.length > 0 ? action.apps[0].id : null),
                 loaded: true
             };
-        case 'VOICEAPPS_SET_SOURCES':
-            return {
-                ...state,
-                sources: { ...state.sources, [action.commandId]: action.sources }
-            };
         case 'VOICEAPPS_SET_NEWS':
             return {
                 ...state,
                 news: { ...state.news, [action.appId]: action.news }
-            };
-        case 'VOICEAPPS_SET_STATS':
-            const time = Math.round((action.end - action.start) / 1000 / 3600 / 24);
-            return {
-                ...state,
-                stats: { ...state.stats, [`${action.appId}-${time}`]: action.stats }
-            };
-        case 'VOICEAPPS_SET_SOURCE':
-            let sources = { ...state.sources };
-            sources[action.commandId].map(s => s.id == action.source.id ? action.source : s);
-            return {
-                ...state,
-                sources
             };
         case 'VOICEAPPS_SELECT_APP':
             return {

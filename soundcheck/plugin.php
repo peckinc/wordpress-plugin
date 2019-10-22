@@ -3,7 +3,7 @@
  * Plugin Name: Soundcheck
  * Plugin URI: https://soundcheck.ai/wordpress
  * Description: The Soundcheck plugin is the easiest way to publish web content that is optimized for voice devices like Amazon Echo and Google Home. You get a new "Speakable" block type and a voice admin screen to validate and preview your voice content.
- * Version: 1.1.1
+ * Version: 1.2.0
  * Author: Soundcheck
  *
  * @package soundcheck
@@ -59,23 +59,41 @@ add_action( 'plugins_loaded', 'soundcheck_admin_plugins_loaded' );
 function output_structured_data() {
 	$post_id = get_the_ID();
 	$meta = get_post_meta($post_id);
-	if ( $meta["_soundcheck_include_speakable_sd"] && $meta["_soundcheck_include_speakable_sd"][0] ) {
 
-		$cssSelector = array(".is-style-speakable", ".wp-block-soundcheck-speakable");
-		if ( $meta["_soundcheck_speakable_selectors"] && $meta["_soundcheck_speakable_selectors"][0] ) {
-			$selectors = $meta["_soundcheck_speakable_selectors"][0];
-			$cssSelector = array();
-			if (strpos($selectors, 'block') !== false) {
-				array_push($cssSelector,".is-style-speakable");
-				array_push($cssSelector,".wp-block-soundcheck-speakable");
-			}
-			if (strpos($selectors, 'meta_desc') !== false) {
-				array_push($cssSelector,"meta[name='description']");
-			}
-			if (strpos($selectors, 'speak_css') !== false) {
-				array_push($cssSelector,".speakable");
-			}
+	$options = get_option('soundcheck_options');
+
+	//defaults if no other setting found
+	$_sd = true;
+	$_selector = 'block';
+
+	//use per-post setting if found, then global if found
+	if ( isset($meta["_soundcheck_include_speakable_sd"])) {
+		$_sd = $meta["_soundcheck_include_speakable_sd"][0];
+	} else if (isset($options)) {
+		$_sd = isset($options["soundcheck_field_sd"]);
+	}
+
+	if ( isset($meta["_soundcheck_speakable_selectors"])) {
+		$_selector = $meta["_soundcheck_speakable_selectors"][0];
+	}  else if (isset($options)) {
+		$_selector = $options["soundcheck_field_selector"];
+	}
+
+	if ( $_sd ) {
+
+		$selectors = $_selector;
+		$cssSelector = array();
+		if (strpos($selectors, 'block') !== false) {
+			array_push($cssSelector,".is-style-speakable");
+			array_push($cssSelector,".wp-block-soundcheck-speakable");
 		}
+		if (strpos($selectors, 'meta_desc') !== false) {
+			array_push($cssSelector,"meta[name='description']");
+		}
+		if (strpos($selectors, 'speak_css') !== false) {
+			array_push($cssSelector,".speakable");
+		}
+		
 
 		$speakable = array("@type" => "SpeakableSpecification", "cssSelector" => $cssSelector);
 		$sd = array("@context" => "http://schema.org/", "@type" => "WebPage", "speakable" => $speakable);

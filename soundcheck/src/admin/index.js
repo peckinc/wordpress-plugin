@@ -109,21 +109,13 @@ registerStore('soundcheck', {
             return actions.setVoiceApps(apps);
         },
 
-        * getVoiceAppStats(appId, start, end) {
-            const path = `/v4/user/voice_apps/${appId}/stats?start=${start}&end=${end}`;
-            const stats = yield actions.fetchFromSoundcheckAPI(path)
-            return actions.setVoiceAppStats(appId, stats, start, end);
-        },
-
-        * getCommandSources(voiceAppId, commandId) {
-            const path = `/v4/user/voice_apps/${voiceAppId}/commands/${commandId}/sources`;
-            const sources = yield actions.fetchFromSoundcheckAPI(path)
-            return actions.setCommandSources(commandId, sources);
-        },
-
         * getSpeakableNews(voiceAppId) {
             const path = `/v4/user/voice_apps/${voiceAppId}/news`;
-            const news = yield actions.fetchFromSoundcheckAPI(path)
+            let news = yield actions.fetchFromSoundcheckAPI(path)
+            if (news['content']) {
+                //prepare for new paged API requests
+                news = news['content'];
+            }
             return actions.setSpeakableNews(voiceAppId, news);
         },
 

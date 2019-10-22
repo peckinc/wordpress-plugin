@@ -5,7 +5,7 @@ Tags: voice, alexa, speakable, google assistant
 Requires at least: 5.0
 Tested up to: 5.2.2
 Requires PHP: 5.2.4
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -86,3 +86,7 @@ No, any website can benefit from `speakable` content. But there are added benefi
 = 1.1.1 =
 * Global settings page to configure speakable structured data
 * More configuration options in the sidebar
+
+= 1.2.0 =
+* More sensible cascade of options and settings for structured data
+* Removing "interactions" section for now to simplify UI. Interactions are still available on the Soundcheck webapp.

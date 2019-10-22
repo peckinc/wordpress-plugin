@@ -21,36 +21,10 @@ const actions = {
         };
     },
 
-    setVoiceAppStats(appId,stats,start,end) {
-        return {
-            type: 'VOICEAPPS_SET_STATS',
-            appId,
-            stats,
-            start,
-            end
-        };
-    },
-
     setSelectedVoiceAppId(appId) {
         return {
             type: 'VOICEAPPS_SELECT_APP',
             id: appId
-        };
-    },
-
-    setCommandSources(commandId,sources) {
-        return {
-            type: 'VOICEAPPS_SET_SOURCES',
-            commandId,
-            sources
-        };
-    },
-
-    setCommandSource(commandId,source) {
-        return {
-            type: 'VOICEAPPS_SET_SOURCE',
-            commandId,
-            source
         };
     },
 
